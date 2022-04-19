@@ -23,9 +23,9 @@ class MicropostsController extends Controller
     public function store(Request $request) {
         $request->validate(['content' => 'required|max:255']);
         
-        $request->user()->microposts()->create() {[
-            'content' => $request->content
-        ]};
+        $request->user()->microposts()->create([
+            'content' => $request->content,
+        ]);
         
         return back();
     }
