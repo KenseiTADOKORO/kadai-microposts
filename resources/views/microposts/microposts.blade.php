@@ -11,12 +11,26 @@
                     <div>
                         <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
                     </div>
-                    <div>
-                        @if(\Auth::id() == $micropost->user_id)
-                            {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!}
-                        @endif
+                    <div class="row ml-1">
+                        <div>
+                            @if(Auth::user()->is_favoriting($micropost->id))
+                                {!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('Unfavorite', ['class' => 'btn btn-success']) !!}
+                                {!! Form::close() !!}
+                            @else
+                                {!! Form::open(['route' => ['favorites.favorite', $micropost->id]]) !!}
+                                    {!! Form::submit('Favorite', ['class' => 'btn btn-light']) !!}
+                                {!! Form::close() !!}
+                            @endif
+                        </div>
+                        
+                        <div>
+                            @if(\Auth::id() == $micropost->user_id)
+                                {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                                {!! Form::close() !!}
+                            @endif
+                        </div>
                     </div>
                 </div>
             </li>
